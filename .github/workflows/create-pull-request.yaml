@@ -24,4 +24,4 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          name: ${{ steps.vars.outputs.tag }}
+          branch: ${{ steps.vars.outputs.tag }}
