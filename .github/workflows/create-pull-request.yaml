@@ -12,19 +12,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: get branch name
+        id: vars
+        run: |
+          tag=$(echo ${{ github.ref }} | sed -r 's/refs\/tags\///')
+          echo ::set-output name=tag::${tag}
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-    #   - name: Create Pull Request
-    #     uses: peter-evans/create-pull-request@v3
-    #     with:
-    #       name:
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          name: ${{ steps.vars.outputs.tag }}
