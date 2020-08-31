@@ -2,4 +2,4 @@
 
 Testing out various GitHub Actions.
 
-1. create-pull-request
+1. Creating a new pull request on commit to feature branches
