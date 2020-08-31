@@ -15,8 +15,8 @@ jobs:
       - name: get branch name
         id: vars
         run: |
-          tag=$(echo ${{ github.ref }} | sed -r 's/refs\/tags\///')
-          echo ::set-output name=tag::${tag}
+          branch=$(echo ${{ github.ref }} | sed -r 's/refs\/head\///')
+          echo ::set-output name=branch::${branch}
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
@@ -24,4 +24,4 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          branch: ${{ steps.vars.outputs.tag }}
+          branch: ${{ steps.vars.outputs.branch }}
