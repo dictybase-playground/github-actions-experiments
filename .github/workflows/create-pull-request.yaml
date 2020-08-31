@@ -1,0 +1,16 @@
+name: Create Pull Request
+on:
+  push:
+    branches:
+      - feature/**
+      - feat/**
+      - refactor/**
+      - chore/**
+      - docs/**
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
