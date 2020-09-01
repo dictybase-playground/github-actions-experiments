@@ -14,6 +14,6 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: |
-            example
             help
+            example
           # repository: dictybase-playground/github-actions-experiments
