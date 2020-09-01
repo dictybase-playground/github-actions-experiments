@@ -6,10 +6,17 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch slash command
+      - name: Dispatch slash command (example)
         uses: peter-evans/slash-command-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          #   issue-type: pull-request
-          commands: help, example
+          issue-type: pull-request
+          commands: example
+      - name: Dispatch slash command (help)
+        uses: peter-evans/slash-command-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          issue-type: issue
+          commands: help
