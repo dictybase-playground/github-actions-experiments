@@ -12,5 +12,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: help
+          commands: |
+            help
+            example
           reactions: true
