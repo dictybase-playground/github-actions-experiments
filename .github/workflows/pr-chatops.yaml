@@ -6,6 +6,8 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+      - name: print something
+        run: echo "OK!!!"
       - name: Dispatch slash command
         uses: peter-evans/slash-command-dispatch@v2
         with:
