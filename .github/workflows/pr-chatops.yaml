@@ -12,5 +12,7 @@ jobs:
         uses: peter-evans/slash-command-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: example
+          commands: |
+            example
+            help
           # repository: dictybase-playground/github-actions-experiments
