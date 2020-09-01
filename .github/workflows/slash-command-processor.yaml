@@ -1,4 +1,4 @@
-name: example-command
+name: Slash Command Processor
 on:
   repository_dispatch:
     types: [example-command]
