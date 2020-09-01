@@ -11,7 +11,7 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          issue_type: pull-request
+          issue-type: pull-request
           commands: |
             help
             example
