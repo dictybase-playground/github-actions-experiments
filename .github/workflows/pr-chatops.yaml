@@ -6,14 +6,18 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-        - name: Output comment
-          run: echo ${{github.event.issue.body}}
+        - name: Dump comment indirectly
+          env: 
+            EVENT_CONTEXT: ${{ toJson(github.event) }}
+          run: echo ${EVENT_CONTEXT}
+        - name: Dump comment directly
+          run: echo ${{ toJson(github.event) }}
         - name: Parse slash command 
-          run: echo ${{github.event.issue.body}} | head -n 1 | grep -E '^/deploy'
+          run: echo ${{ github.event.issue.body }} | head -n 1 | grep -E '^/deploy'
         - name: Check if correct
-          if: ${{success()}}
+          if: ${{ success() }}
           run: echo 'got deploy slash command' 
         - name: Check if incorrect
-          if: ${{failure()}}
+          if: ${{ failure() }}
           run: echo 'not a deploy slash command' 
  
