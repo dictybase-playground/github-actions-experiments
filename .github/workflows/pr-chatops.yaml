@@ -9,7 +9,7 @@ jobs:
             #- name: Parse slash command 
             #run: jq '.comment.body' ${GITHUB_EVENT_PATH} | head -n 1 | grep -E '^/deploy'
         - name: Output json
-          run: jq "." ${GITHUB_EVENT_PATH}
+          run: jq ".comment.body" ${GITHUB_EVENT_PATH}
         - name: Check if correct
           if: ${{ success() }}
           run: echo 'got deploy slash command' 
