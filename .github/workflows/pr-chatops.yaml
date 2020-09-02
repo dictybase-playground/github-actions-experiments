@@ -6,6 +6,8 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+        - name: check folder
+          run: ls -R workflow/
         - name: Parse slash command 
           run: echo ${{ github.event.comment.body }} | head -n 1 | grep -E '^/deploy'
         - name: Check if correct
