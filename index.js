@@ -50,6 +50,7 @@ const run = async () => {
     }
 
     if (branch !== undefined) {
+      await exec.exec("git", ["fetch", branch])
       shortSHA = await exec.exec("git", [
         "log",
         `origin/${branch}`,
