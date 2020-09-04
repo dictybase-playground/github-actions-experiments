@@ -15,8 +15,6 @@ try {
   const branch = payload.client_payload.slash_command.args.named.branch
   const commit = payload.client_payload.slash_command.args.named.commit
   const pullRequestID = payload.client_payload.slash_command.args.named.pr
-  const sha = payload.client_payload.pull_request.head.sha
-  const pullRequestNumber = payload.client_payload.pull_request.number
   let shortSHA, ref, imageTag
 
   // if cluster wasn't passed, exit immediately
@@ -37,12 +35,15 @@ try {
   }
 
   if (unnamedArgs.includes("pr") && commit === "") {
+    const pullRequestNumber = payload.client_payload.pull_request.number
+    const sha = payload.client_payload.pull_request.head.sha
     shortSHA = sha.substr(0, 7)
     imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = sha
   }
 
   if (unnamedArgs.includes("pr") && commit !== "") {
+    const pullRequestNumber = payload.client_payload.pull_request.number
     shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = commit
