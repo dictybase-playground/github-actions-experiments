@@ -24,13 +24,13 @@ try {
     process.exit(1)
   }
 
-  if (commit.length > 0) {
+  if (commit !== "") {
     ref = commit
     imageTag = shortSHA
     shortSHA = commit.substr(0, 7)
   }
 
-  if (pullRequestID.length > 0) {
+  if (pullRequestID !== "") {
     shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestID}-${shortSHA}`
     ref = commit
@@ -42,13 +42,13 @@ try {
     ref = sha
   }
 
-  if (unnamedArgs.includes("pr") && commit.length > 0) {
+  if (unnamedArgs.includes("pr") && commit !== "") {
     shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = commit
   }
 
-  if (branch.length > 0) {
+  if (branch !== "") {
     shortSHA = "xyz" // need to change this
     convertedBranch = branch.replace("/", "-")
     ref = branch
