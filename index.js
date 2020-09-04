@@ -1,5 +1,6 @@
 const core = require("@actions/core")
 const github = require("@actions/github")
+const exec = require("@actions/exec")
 
 const run = async () => {
   try {
@@ -49,7 +50,12 @@ const run = async () => {
     }
 
     if (branch !== undefined) {
-      shortSHA = "xyz" // need to change this
+      shortSHA = await exec.exec("git", [
+        "log",
+        `origin/${branch}`,
+        "-1",
+        "--format=%h",
+      ])
       convertedBranch = branch.replace("/", "-")
       ref = branch
       imageTag = `${convertedBranch}-${shortSHA}`
