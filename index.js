@@ -2,8 +2,8 @@ const core = require("@actions/core")
 const github = require("@actions/github")
 
 try {
-  console.log(`The event payload: ${payload}`)
   const payload = JSON.stringify(github.context.payload, undefined, 2)
+  console.log(`The event payload: ${payload}`)
   const cluster = payload.event.client_payload.slash_command.args.named.cluster
   const unnamedArgs =
     payload.event.client_payload.slash_command.args.unnamed.all
