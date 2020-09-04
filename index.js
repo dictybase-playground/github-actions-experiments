@@ -18,23 +18,23 @@ try {
   let shortSHA, ref, imageTag
 
   // if cluster wasn't passed, exit immediately
-  if (cluster === "") {
+  if (cluster === undefined) {
     process.exit(1)
   }
 
-  if (commit !== "") {
+  if (commit !== undefined) {
     ref = commit
     imageTag = shortSHA
     shortSHA = commit.substr(0, 7)
   }
 
-  if (pullRequestID !== "") {
+  if (pullRequestID !== undefined) {
     shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestID}-${shortSHA}`
     ref = commit
   }
 
-  if (unnamedArgs.includes("pr") && commit === "") {
+  if (unnamedArgs.includes("pr") && commit === undefined) {
     const pullRequestNumber = payload.client_payload.pull_request.number
     const sha = payload.client_payload.pull_request.head.sha
     shortSHA = sha.substr(0, 7)
@@ -42,14 +42,14 @@ try {
     ref = sha
   }
 
-  if (unnamedArgs.includes("pr") && commit !== "") {
+  if (unnamedArgs.includes("pr") && commit !== undefined) {
     const pullRequestNumber = payload.client_payload.pull_request.number
     shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = commit
   }
 
-  if (branch !== "") {
+  if (branch !== undefined) {
     shortSHA = "xyz" // need to change this
     convertedBranch = branch.replace("/", "-")
     ref = branch
