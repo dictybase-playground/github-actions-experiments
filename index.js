@@ -4,14 +4,15 @@ const github = require("@actions/github")
 try {
   const payload = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payload}`)
-  const cluster = payload.event.client_payload.slash_command.args.named.cluster
+  const cluster = payload.client_payload.github.slash_command.args.named.cluster
   const unnamedArgs =
-    payload.event.client_payload.slash_command.args.unnamed.all
-  const branch = payload.event.client_payload.slash_command.args.named.branch
-  const commit = payload.event.client_payload.slash_command.args.named.commit
-  const pullRequestID = payload.event.client_payload.slash_command.args.named.pr
-  const sha = payload.event.client_payload.pull_request.head.sha
-  const pullRequestNumber = payload.event.client_payload.pull_request.number
+    payload.client_payload.github.slash_command.args.unnamed.all
+  const branch = payload.client_payload.github.slash_command.args.named.branch
+  const commit = payload.client_payload.github.slash_command.args.named.commit
+  const pullRequestID =
+    payload.client_payload.github.slash_command.args.named.pr
+  const sha = payload.client_payload.github.pull_request.head.sha
+  const pullRequestNumber = payload.client_payload.github.pull_request.number
   let shortSHA = commit.substr(0, 7)
   let ref = commit
   let imageTag = commit
