@@ -5,6 +5,11 @@ try {
   const payloadJSON = JSON.stringify(github.context.payload, undefined, 2)
   console.log(`The event payload: ${payloadJSON}`)
   const payload = github.context.payload
+
+  if (!payload.client_payload.github.slash_command.args) {
+    process.exit(1)
+  }
+
   const cluster = payload.client_payload.github.slash_command.args.named.cluster
   const unnamedArgs =
     payload.client_payload.github.slash_command.args.unnamed.all
