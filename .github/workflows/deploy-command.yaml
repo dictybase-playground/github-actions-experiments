@@ -13,8 +13,7 @@ jobs:
       - name: Dump the client payload context
         env:
           PAYLOAD_CONTEXT: ${{ toJson(github.event.client_payload) }}
-        run: echo "$PAYLOAD_CONTEXT"
-      - run: git branch -r
+        run: echo "$GITHUB_EVENT_PATH"
       - name: extract and set vars
         id: vars
         run: |
