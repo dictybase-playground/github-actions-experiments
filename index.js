@@ -6,7 +6,7 @@ try {
   console.log(`The event payload: ${payloadJSON}`)
   const payload = github.context.payload
 
-  if (!payload.client_payload.github.slash_command.args) {
+  if (payload.client_payload.github.slash_command.args === undefined) {
     process.exit(1)
   }
 
@@ -40,14 +40,12 @@ try {
 
   if (unnamedArgs.includes("pr") && commit === "") {
     shortSHA = sha.substr(0, 7)
-    pullRequestID = pullRequestNumber
-    imageTag = `pr-${pullRequestID}-${shortSHA}`
+    imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = sha
   }
 
   if (unnamedArgs.includes("pr") && commit.length > 0) {
-    pullRequestID = pullRequestNumber
-    imageTag = `pr-${pullRequestID}-${shortSHA}`
+    imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = commit
   }
 
