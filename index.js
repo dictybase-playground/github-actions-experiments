@@ -50,13 +50,7 @@ const run = async () => {
     }
 
     if (branch !== undefined) {
-      await exec.exec("git", ["fetch", branch])
-      shortSHA = await exec.exec("git", [
-        "log",
-        `origin/${branch}`,
-        "-1",
-        "--format=%h",
-      ])
+      shortSHA = await exec.exec("git", ["rev-parse", `origin/${branch}`])
       convertedBranch = branch.replace("/", "-")
       ref = branch
       imageTag = `${convertedBranch}-${shortSHA}`
