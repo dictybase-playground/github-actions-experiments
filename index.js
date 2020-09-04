@@ -17,9 +17,7 @@ try {
   const pullRequestID = payload.client_payload.slash_command.args.named.pr
   const sha = payload.client_payload.pull_request.head.sha
   const pullRequestNumber = payload.client_payload.pull_request.number
-  let shortSHA = commit.substr(0, 7)
-  let ref = commit
-  let imageTag = commit
+  let shortSHA, ref, imageTag
 
   // if cluster wasn't passed, exit immediately
   if (cluster === "") {
@@ -29,9 +27,11 @@ try {
   if (commit.length > 0) {
     ref = commit
     imageTag = shortSHA
+    shortSHA = commit.substr(0, 7)
   }
 
   if (pullRequestID.length > 0) {
+    shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestID}-${shortSHA}`
     ref = commit
   }
@@ -43,12 +43,13 @@ try {
   }
 
   if (unnamedArgs.includes("pr") && commit.length > 0) {
+    shortSHA = commit.substr(0, 7)
     imageTag = `pr-${pullRequestNumber}-${shortSHA}`
     ref = commit
   }
 
   if (branch.length > 0) {
-    shortSHA = commit // need to change this
+    shortSHA = "xyz" // need to change this
     convertedBranch = branch.replace("/", "-")
     ref = branch
     imageTag = `${convertedBranch}-${shortSHA}`
