@@ -16,7 +16,15 @@ jobs:
         run: echo "$GITHUB_EVENT_PATH"
       - name: Conditional test
         if: ${{ github.event.client_payload.pull_request }}
-        run: echo "got a pull request"
+        id: food
+        run: echo ::set-output name=fruit::mango
+      - name: Conditional test 2
+        if: ${{ !github.event.client_payload.pull_request }}
+        id: food
+        run: echo ::set-output name=fruit::cherry
+      - name: print fruit
+        run: |
+          echo fruit: ${{ steps.food.outputs.fruit }}
       - name: extract and set vars
         id: vars
         run: |
