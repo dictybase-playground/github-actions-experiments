@@ -33,7 +33,7 @@ jobs:
           echo type: ${{ steps.type.outputs.comment }}
       - name: extract information from chatops payload
         id: vars
-        run: actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }}
+        run: actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
       - name: print vars
         run: |
           echo ref: ${{ steps.vars.outputs.ref }}
