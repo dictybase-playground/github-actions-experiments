@@ -20,7 +20,7 @@ jobs:
         id: type
         run: |
           pr=$(jq ".client_payload.pull_request.url" ${GITHUB_EVENT_PATH})
-          if [ -z "$pr" ]
+          if [[ -n "$pr" ]]
           then
             echo ::set-output name=comment::issue
           else
