@@ -28,7 +28,7 @@ jobs:
           fi
       - name: print type
         run: |
-          echo type: ${{ steps.food.outputs.comment }}
+          echo type: ${{ steps.type.outputs.comment }}
       - name: extract and set vars
         id: vars
         run: |
