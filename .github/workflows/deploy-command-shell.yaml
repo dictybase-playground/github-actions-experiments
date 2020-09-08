@@ -1,7 +1,7 @@
 name: Deploy Slash Command
 on:
   repository_dispatch:
-    types: [deploy-command]
+    types: [shell-command]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -10,13 +10,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Dump the client payload context
-        env:
-          PAYLOAD_CONTEXT: ${{ toJson(github.event.client_payload) }}
-        run: echo "$GITHUB_EVENT_PATH"
-      - name: Output json
-        run: jq ".client_payload.pull_request.url" ${GITHUB_EVENT_PATH}
-      - name: Conditional test
+      - name: Check if PR deploy command
         id: type
         run: |
           pr=$(jq ".client_payload.pull_request.url" ${GITHUB_EVENT_PATH})
