@@ -12,12 +12,12 @@ jobs:
           fetch-depth: 0
       - name: print dir
         run: ls
-      # - name: download and setup path for github action binary
-      #   run: |
-      #     mkdir -p github-actions/bin
-      #     curl -L -o github-actions/bin/actions https://github.com/dictybase-docker/github-actions/releases/download/v0.0.2/action_0.0.2_Linux_x86_64
-      #     chmod +x github-actions/bin/actions
-      #     echo "::add-path::$GITHUB_WORKSPACE/github-actions/bin"
+      - name: set up actions binary
+        run: |
+          mkdir -p github-actions/bin
+          mv actions github-actions/bin
+          chmod +x github-actions/bin/actions
+          echo "::add-path::$GITHUB_WORKSPACE/github-actions/bin"
       - name: check if deploy command came from PR
         id: type
         run: |
