@@ -19,21 +19,15 @@ jobs:
           chmod +x github-actions/bin/actions
           echo "::add-path::$GITHUB_WORKSPACE/github-actions/bin"
       - name: check if deploy command came from PR
-        id: type
+        id: vars
         run: |
           pr=$(jq ".client_payload.pull_request.url" ${GITHUB_EVENT_PATH})
           if [[ "$pr" = "null" ]]
           then
-            echo ::set-output name=comment::issue
+            echo "got an issue -- script to be added later"
           else
-            echo ::set-output name=comment::pr
+            actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
           fi
-      - name: print type
-        run: |
-          echo type: ${{ steps.type.outputs.comment }}
-      - name: extract information from chatops payload
-        id: vars
-        run: actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
       - name: print vars
         run: |
           echo ref: ${{ steps.vars.outputs.ref }}
