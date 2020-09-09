@@ -6,6 +6,10 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
+      - name: Dump the client payload context
+        env:
+          PAYLOAD_CONTEXT: ${{ toJson(github) }}
+        run: echo "$PAYLOAD_CONTEXT"
       - name: Dispatch slash command
         uses: peter-evans/slash-command-dispatch@v2
         with:
@@ -18,3 +22,13 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: banana
+      - name: Dispatch workflow slash command
+        uses: peter-evans/slash-command-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          commands: dep
+          dispatch-type: workflow
+          static-args: |
+            repository=${{ github.repository }}
+            issue-number=${{ github.event.issue.number }}
