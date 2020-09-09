@@ -8,3 +8,4 @@ Testing out various GitHub Actions.
 [Examples of `github.event.client_payload` JSON](/json).
 
 Also testing a new action.
+test
