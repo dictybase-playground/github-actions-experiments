@@ -23,7 +23,7 @@ jobs:
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: banana
       - name: Dispatch workflow slash command
-        id: dep
+        id: cmd
         uses: peter-evans/slash-command-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
@@ -34,9 +34,9 @@ jobs:
             repository=${{ github.repository }}
             issue-number=${{ github.event.issue.number }}
       - name: Edit comment with error message
-        if: steps.dep.outputs.error-message
+        if: steps.cmd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           body: |
-            > ${{ steps.dep.outputs.error-message }}
+            > ${{ steps.cmd.outputs.error-message }}
