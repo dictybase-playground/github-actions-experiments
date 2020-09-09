@@ -2,15 +2,15 @@ name: dep-command
 on:
   workflow_dispatch:
     inputs:
-      repository:
-        description: "The repository from which the slash command was dispatched"
-        required: true
-      issue-number:
-        description: "The issue number in which the slash command was made"
-        required: true
-      cluster:
-        description: "The cluster to deploy to"
-        required: true
+      #   repository:
+      #     description: "The repository from which the slash command was dispatched"
+      #     required: true
+      #   issue-number:
+      #     description: "The issue number in which the slash command was made"
+      #     required: true
+      #   cluster:
+      #     description: "The cluster to deploy to"
+      #     required: true
       commit:
         description: "Commit ID to deploy"
         required: false
