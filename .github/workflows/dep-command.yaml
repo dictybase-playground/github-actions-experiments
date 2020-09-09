@@ -1,4 +1,4 @@
-name: seinfeld-command
+name: dep-command
 on:
   workflow_dispatch:
     inputs:
@@ -8,15 +8,15 @@ on:
       issue-number:
         description: "The issue number in which the slash command was made"
         required: true
-      cluster:
-        description: "The cluster to deploy to"
-        required: true
-      commit:
-        description: "Commit ID to deploy"
-        required: false
-      type:
-        description: "Type to deploy (used to specify PR)"
-        required: false
+    #   cluster:
+    #     description: "The cluster to deploy to"
+    #     required: true
+    #   commit:
+    #     description: "Commit ID to deploy"
+    #     required: false
+    #   type:
+    #     description: "Type to deploy (used to specify PR)"
+    #     required: false
 jobs:
   deploy:
     runs-on: ubuntu-latest
