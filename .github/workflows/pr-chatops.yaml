@@ -40,3 +40,23 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           body: |
             > ${{ steps.cmd.outputs.error-message }}
+      - name: Dispatch workflow slash command
+        id: hello
+        uses: peter-evans/slash-command-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          commands: hello-workflow
+          dispatch-type: workflow
+          static-args: |
+            repository=${{ github.repository }}
+            issue-number=${{ github.event.issue.number }}
+            comment-id=${{ github.event.comment.id }}
+            actor=${{ github.actor }}
+      - name: Edit comment with error message
+        if: steps.hello.outputs.error-message
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          body: |
+            > ${{ steps.hello.outputs.error-message }}
