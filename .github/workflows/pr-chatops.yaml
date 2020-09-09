@@ -30,6 +30,7 @@ jobs:
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: dep
           dispatch-type: workflow
+          repository: ${{ github.repository }}
           static-args: |
             repository=${{ github.repository }}
             issue-number=${{ github.event.issue.number }}
