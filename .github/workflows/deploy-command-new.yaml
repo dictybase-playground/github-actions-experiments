@@ -22,16 +22,16 @@ jobs:
         id: vars
         run: |
           pr=$(jq ".client_payload.pull_request.url" ${GITHUB_EVENT_PATH})
-          commit=${{ github.event.client_payload.slash_command.args.named.commit }}
+          commit=$(jq ".client_payload.slash_command.args.named.commit" ${GITHUB_EVENT_PATH})
           if [[ "$pr" = "null" ]]
           then
             echo "got an issue -- script to be added later"
           else
-            if [ ! -z "$commit" -a "$commit" != " " ]
+            if [[ "$commit" = "null" ]]
             then
-              actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
+              actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} 
             else
-              actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }}
+              actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
             fi
           fi
       - name: print vars
