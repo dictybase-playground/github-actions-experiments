@@ -28,11 +28,17 @@ jobs:
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: seinfeld
-          dispatch-type: workflow
-          static-args: |
-            repository=${{ github.repository }}
-            issue-number=${{ github.event.issue.number }}
+          config: >
+            [
+              {
+                "command": "seinfeld",
+                "static_args": [
+                  "repository=${{ github.repository }}",
+                  "issue-number=${{ github.event.issue.number }}"
+                ],
+                "dispatch_type": "workflow"
+              }
+            ]
       - name: Edit comment with error message
         if: steps.cmd.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
