@@ -31,7 +31,6 @@ jobs:
             then
               actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }}
             else
-            then
               actions --log-level debug cpd --cluster ${{ github.event.client_payload.slash_command.args.named.cluster }} --head-sha ${{ github.event.client_payload.pull_request.head.sha }} --pr-id ${{ github.event.client_payload.pull_request.number }} --commit ${{ github.event.client_payload.slash_command.args.named.commit }}
             fi
           fi
