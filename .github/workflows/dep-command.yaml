@@ -1,6 +1,7 @@
 name: Deploy Workflow Dispatch
 on:
   workflow_dispatch:
+    types: [dep-command]
     inputs:
       repository:
         description: "The repository from which the slash command was dispatched"
