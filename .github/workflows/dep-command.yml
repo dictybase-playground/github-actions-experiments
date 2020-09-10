@@ -25,7 +25,7 @@ on:
         required: false
 jobs:
   deploy:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     name: Testing deploy
     steps:
       - name: Checkout
@@ -39,13 +39,15 @@ jobs:
       - name: download and setup path for github action binary
         run: |
           mkdir -p github-actions/bin
-          curl -L -o github-actions/bin/actions https://github.com/dictybase-docker/github-actions/releases/download/v0.3.0/action_0.3.0_macOSX_x86_64
+          curl -L -o github-actions/bin/actions https://github.com/dictybase-docker/github-actions/releases/download/v0.3.0/action_0.3.0_Linux_x86_64
           chmod +x github-actions/bin/actions
           echo "::add-path::$GITHUB_WORKSPACE/github-actions/bin"
+      - name: write payload
+        run: cat $GITHUB_EVENT_PATH > payload.json
       - name: extract and set vars
         id: vars
         run: |
-          actions --log-level debug pcd -f ${GITHUB_EVENT_PATH}
+          actions --log-level debug pcd -f payload.json
       - name: print vars
         run: |
           echo ref: ${{ steps.vars.outputs.ref }}
