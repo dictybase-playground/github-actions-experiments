@@ -34,5 +34,5 @@ jobs:
           fetch-depth: 0
       - name: Store inputs as JSON
         env:
-          WORKFLOW_INPUTS: ${{ toJson(github.events.inputs) }}
+          WORKFLOW_INPUTS: ${{ toJson(github.event.inputs) }}
         run: echo "$WORKFLOW_INPUTS"
