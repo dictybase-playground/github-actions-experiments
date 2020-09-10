@@ -43,7 +43,7 @@ jobs:
         run: echo "::set-env name=inputs::${WORKFLOW_INPUTS}"
       - name: print vars
         run: |
-          echo ref: ${{ steps.workflow.outputs.inputs }} | jq '.'
+          echo ref: ${{ steps.workflow.outputs.inputs }}
       - name: set up actions binary
         run: |
           mkdir -p github-actions/bin
