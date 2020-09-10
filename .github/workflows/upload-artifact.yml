@@ -1,0 +1,11 @@
+name: Upload Artifact
+on: push
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/upload-artifact@v2
+        with:
+          name: payload
+          path: ${GITHUB_EVENT_PATH}
