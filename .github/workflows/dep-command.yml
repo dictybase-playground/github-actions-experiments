@@ -45,7 +45,7 @@ jobs:
       - name: extract and set vars
         id: vars
         run: |
-          actions --log-level debug pcd -j $WORKFLOW_INPUTS
+          actions --log-level debug pcd -j ${WORKFLOW_INPUTS}
       # - name: print vars
       #   run: |
       #     echo ref: ${{ steps.vars.outputs.ref }}
