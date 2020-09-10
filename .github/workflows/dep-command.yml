@@ -33,9 +33,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Store inputs as JSON
+        id: workflow
         env:
           WORKFLOW_INPUTS: ${{ toJson(github.event.inputs) }}
-        run: echo "$WORKFLOW_INPUTS"
+        run: echo "::set-env name=inputs::$WORKFLOW_INPUTS"
       - name: set up actions binary
         run: |
           mkdir -p github-actions/bin
@@ -45,7 +46,7 @@ jobs:
       - name: extract and set vars
         id: vars
         run: |
-          actions --log-level debug pcd -j ${WORKFLOW_INPUTS}
+          actions --log-level debug pcd -j ${{ steps.workflow.outputs.inputs }}
       # - name: print vars
       #   run: |
       #     echo ref: ${{ steps.vars.outputs.ref }}
