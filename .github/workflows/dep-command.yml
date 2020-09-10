@@ -26,7 +26,7 @@ on:
 jobs:
   deploy:
     runs-on: macos-latest
-    name: A job to test new action
+    name: Testing deploy
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -36,14 +36,6 @@ jobs:
         env:
           PAYLOAD_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_EVENT_PATH"
-      - name: Store inputs as JSON
-        id: workflow
-        env:
-          WORKFLOW_INPUTS: ${{ toJson(github.event.inputs) }}
-        run: echo "::set-env name=inputs::${WORKFLOW_INPUTS}"
-      - name: print vars
-        run: |
-          echo ref: ${{ steps.workflow.outputs.inputs }}
       - name: set up actions binary
         run: |
           mkdir -p github-actions/bin
@@ -53,7 +45,7 @@ jobs:
       - name: extract and set vars
         id: vars
         run: |
-          actions --log-level debug pcd -j ${{ toJson(github.event.inputs) }}
+          actions --log-level debug pcd -f ${GITHUB_EVENT_PATH}
       # - name: print vars
       #   run: |
       #     echo ref: ${{ steps.vars.outputs.ref }}
