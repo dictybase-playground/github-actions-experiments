@@ -32,11 +32,15 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Dump the github context
+        env:
+          PAYLOAD_CONTEXT: ${{ toJson(github) }}
+        run: echo "$PAYLOAD_CONTEXT"
       - name: Store inputs as JSON
         id: workflow
         env:
           WORKFLOW_INPUTS: ${{ toJson(github.event.inputs) }}
-        run: echo "::set-env name=inputs::$WORKFLOW_INPUTS"
+        run: echo "::set-env name=inputs::${WORKFLOW_INPUTS}"
       - name: print vars
         run: |
           echo ref: ${{ steps.workflow.outputs.inputs }} | jq '.'
