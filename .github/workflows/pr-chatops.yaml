@@ -22,25 +22,27 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: banana
-      # - name: Dispatch workflow slash command
-      #   id: cmd
-      #   uses: peter-evans/slash-command-dispatch@v2
-      #   with:
-      #     token: ${{ secrets.REPO_ACCESS_TOKEN }}
-      #     reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-      #     commands: dep
-      #     dispatch-type: workflow
-      #     static-args: |
-      #       repository=${{ github.repository }}
-      #       issue-number=${{ github.event.issue.number }}
-      # - name: Edit comment with error message
-      #   if: steps.cmd.outputs.error-message
-      #   uses: peter-evans/create-or-update-comment@v1
-      #   with:
-      #     comment-id: ${{ github.event.comment.id }}
-      #     body: |
-      #       > ${{ steps.cmd.outputs.error-message }}
       - name: Dispatch workflow slash command
+        id: cmd
+        uses: peter-evans/slash-command-dispatch@v2
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          commands: dep
+          dispatch-type: workflow
+          static-args: |
+            repository-name=${{ github.event.repository.name }}
+            repository-owner=${{ github.repository_owner }}
+            issue-number=${{ github.event.issue.number }}
+            html-url=${{ github.event.comment.html_url }}
+      - name: Edit comment with error message
+        if: steps.cmd.outputs.error-message
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          body: |
+            > ${{ steps.cmd.outputs.error-message }}
+      - name: Dispatch hello workflow slash command
         id: hello
         uses: peter-evans/slash-command-dispatch@v2
         with:
@@ -53,7 +55,7 @@ jobs:
             issue-number=${{ github.event.issue.number }}
             comment-id=${{ github.event.comment.id }}
             actor=${{ github.actor }}
-      - name: Edit comment with error message
+      - name: Edit hello comment with error message
         if: steps.hello.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
         with:

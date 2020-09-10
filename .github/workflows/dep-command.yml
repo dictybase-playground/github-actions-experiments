@@ -1,0 +1,38 @@
+name: dep-command
+on:
+  workflow_dispatch:
+    inputs:
+      repository-name:
+        description: "The name of the repository from which the slash command was dispatched"
+        required: true
+      repository-owner:
+        description: "The owner of the repository from which the slash command was dispatched"
+        required: true
+      issue-number:
+        description: "The issue number in which the slash command was made"
+        required: true
+      html-url:
+        description: "URL where comment was created"
+        required: true
+      cluster:
+        description: "The cluster to deploy to"
+        required: true
+      commit:
+        description: "Commit ID to deploy"
+        required: false
+      branch:
+        description: "Branch to deploy"
+        required: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: A job to test new action
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Store inputs as JSON
+        env:
+          WORKFLOW_INPUTS: ${{ toJson(github.events.inputs) }}
+        run: echo "$WORKFLOW_INPUTS"
