@@ -35,7 +35,7 @@ jobs:
       - name: Dump the github context
         env:
           PAYLOAD_CONTEXT: ${{ toJson(github) }}
-        run: echo "$PAYLOAD_CONTEXT"
+        run: echo "$GITHUB_EVENT_PATH"
       - name: Store inputs as JSON
         id: workflow
         env:
