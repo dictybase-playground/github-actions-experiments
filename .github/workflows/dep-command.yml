@@ -25,7 +25,7 @@ on:
         required: false
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     name: A job to test new action
     steps:
       - name: Checkout
@@ -36,3 +36,18 @@ jobs:
         env:
           WORKFLOW_INPUTS: ${{ toJson(github.event.inputs) }}
         run: echo "$WORKFLOW_INPUTS"
+      - name: set up actions binary
+        run: |
+          mkdir -p github-actions/bin
+          mv actions github-actions/bin
+          chmod +x github-actions/bin/actions
+          echo "::add-path::$GITHUB_WORKSPACE/github-actions/bin"
+      - name: extract and set vars
+        id: vars
+        run: |
+          actions --log-level debug pcd -j $WORKFLOW_INPUTS
+      # - name: print vars
+      #   run: |
+      #     echo ref: ${{ steps.vars.outputs.ref }}
+      #     echo cluster: ${{ steps.vars.outputs.cluster }}
+      #     echo image_tag: ${{ steps.vars.outputs.image_tag }}
