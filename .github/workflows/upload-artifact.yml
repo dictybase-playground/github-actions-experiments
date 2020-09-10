@@ -4,8 +4,10 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/upload-artifact@v2
+      - name: Write payload
+        run: cat $GITHUB_EVENT_PATH > payload.json
+      - name: Upload payload
+        uses: actions/upload-artifact@v2
         with:
           name: payload
-          path: $GITHUB_EVENT_PATH
+          path: payload.json
