@@ -19,6 +19,7 @@ jobs:
             repository-owner=${{ github.repository_owner }}
             issue-number=${{ github.event.issue.number }}
             html-url=${{ github.event.comment.html_url }}
+            comment-id=${{ github.event.comment.id }}
       - name: Edit comment with error message
         if: steps.deploy.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
