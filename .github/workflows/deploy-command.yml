@@ -69,7 +69,7 @@ jobs:
           cluster-zone: "us-central1-a"
           namespace: dictybase
           chart-name: ${{ github.event.inputs.repository-name }}
-          chart-path: deployments/charts/automan
+          chart-path: deployments/charts/${{ github.event.client_payload.github.payload.repository.name }}
           token: ${{ secrets.GITHUB_TOKEN }}
           image-tag: ${{ steps.vars.outputs.image_tag }}
           ref: ${{ steps.vars.outputs.ref }}
