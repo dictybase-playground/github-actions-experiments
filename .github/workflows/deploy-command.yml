@@ -1,4 +1,4 @@
-name: dep-command
+name: deploy-command
 on:
   workflow_dispatch:
     inputs:

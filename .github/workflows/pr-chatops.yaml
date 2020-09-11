@@ -6,29 +6,13 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump the client payload context
-        env:
-          PAYLOAD_CONTEXT: ${{ toJson(github) }}
-        run: echo "$PAYLOAD_CONTEXT"
-      - name: Dispatch slash command
+      - name: Dispatch workflow slash command
+        id: deploy
         uses: peter-evans/slash-command-dispatch@v2
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: deploy
-      - name: Dispatch slash command
-        uses: peter-evans/slash-command-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: banana
-      - name: Dispatch workflow slash command
-        id: dep
-        uses: peter-evans/slash-command-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: dep
           dispatch-type: workflow
           static-args: |
             repository-name=${{ github.event.repository.name }}
@@ -36,29 +20,9 @@ jobs:
             issue-number=${{ github.event.issue.number }}
             html-url=${{ github.event.comment.html_url }}
       - name: Edit comment with error message
-        if: steps.dep.outputs.error-message
+        if: steps.deploy.outputs.error-message
         uses: peter-evans/create-or-update-comment@v1
         with:
           comment-id: ${{ github.event.comment.id }}
           body: |
-            > ${{ steps.dep.outputs.error-message }}
-      - name: Dispatch hello workflow slash command
-        id: hello
-        uses: peter-evans/slash-command-dispatch@v2
-        with:
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
-          commands: hello-workflow
-          dispatch-type: workflow
-          static-args: |
-            repository=${{ github.repository }}
-            issue-number=${{ github.event.issue.number }}
-            comment-id=${{ github.event.comment.id }}
-            actor=${{ github.actor }}
-      - name: Edit hello comment with error message
-        if: steps.hello.outputs.error-message
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: ${{ github.event.comment.id }}
-          body: |
-            > ${{ steps.hello.outputs.error-message }}
+            > ${{ steps.deploy.outputs.error-message }}
