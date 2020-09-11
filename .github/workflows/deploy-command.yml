@@ -127,5 +127,6 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: ${{ github.event.inputs.repository-owner }}/${{ github.event.inputs.repository-name }}
           comment-id: ${{ github.event.inputs.comment-id }}
           reaction-type: hooray
