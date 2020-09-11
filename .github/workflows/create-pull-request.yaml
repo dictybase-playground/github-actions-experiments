@@ -1,8 +1,5 @@
 name: Create Pull Request
-on:
-  create:
-    branches:
-      - "feature/**"
+on: create
 jobs:
   create-pr:
     runs-on: ubuntu-latest
