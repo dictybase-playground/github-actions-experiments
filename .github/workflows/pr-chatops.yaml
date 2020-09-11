@@ -6,7 +6,7 @@ jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dispatch workflow slash command
+      - name: Dispatch deploy slash command
         id: deploy
         uses: peter-evans/slash-command-dispatch@v2
         with:
@@ -14,6 +14,7 @@ jobs:
           reaction-token: ${{ secrets.REPO_ACCESS_TOKEN }}
           commands: deploy
           dispatch-type: workflow
+          repository: dictybase-playground/github-actions-experiments
           static-args: |
             repository-name=${{ github.event.repository.name }}
             repository-owner=${{ github.repository_owner }}
@@ -27,9 +28,8 @@ jobs:
           comment-id: ${{ github.event.comment.id }}
           body: |
             > ${{ steps.deploy.outputs.error-message }}
-            For /deploy commands used in GitHub Issues, you need to specify either specify 
-            a `commit` or `branch` to deploy.
+            > For /deploy commands used in GitHub Issues, you need to specify either specify a `commit` or `branch` to deploy.
 
-            Example: `/deploy cluster=erickube branch=feature/new-command`
+            > Example: `/deploy cluster=erickube branch=feature/new-command`
 
-            For /deploy commands used in pull requests, you can optionally specify a `commit`.
+            > For /deploy commands used in pull requests, you can optionally specify a `commit`.
