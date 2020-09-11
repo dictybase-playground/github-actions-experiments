@@ -35,10 +35,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository-owner }}/${{ github.event.inputs.repository-name }}
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
       - name: download and setup path for github actions binary
         run: |
           mkdir -p github-actions/bin
@@ -48,10 +44,6 @@ jobs:
       - name: parse deploy command and set vars
         id: vars
         run: actions --log-level debug pcd -f ${GITHUB_EVENT_PATH}
-      - name: print vars
-        run: |
-          echo ref: ${{ steps.vars.outputs.ref }}
-          echo image_tag: ${{ steps.vars.outputs.image_tag }}
       - name: image build and push
         if: ${{ success() }}
         uses: docker/build-push-action@v1
