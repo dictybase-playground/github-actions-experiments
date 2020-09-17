@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: write payload
+        run: cat $GITHUB_EVENT_PATH > payload.json
       - uses: actions/upload-artifact@v2
         with:
-          name: event-json
-          path: ${GITHUB_EVENT_PATH}
+          name: payload
+          path: payload.json
