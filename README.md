@@ -6,5 +6,3 @@ Testing out various GitHub Actions.
 2. Chatops
 
 [Examples of `github.event.client_payload` JSON](/json).
-
-just testing PR...
