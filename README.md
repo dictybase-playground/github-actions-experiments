@@ -7,3 +7,6 @@ Testing out various GitHub Actions.
    - `/deploy`
 
 [Examples of `github.event.client_payload` JSON](/json).
+
+Also testing a new action.
+test
